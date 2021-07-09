@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 const PORT = 8080;
 
@@ -10,36 +12,38 @@ const visitas = {
   item: 0, // Visitas a /random-item
   items: 0, // Visitas a /items
 };
-
-let productos;
-
-const getProductos = async () => {
-    try {
-        let prod = await fs.promises.readFile("./productos.txt");
-        return JSON.parse(prod);
-      } catch {
-        return []; 
-      }
+/* type producto = {
+  title: string,
+  price: number,
+  thumbnail: string,
 }
+*/
 
-app.get('/items', async (req, res) => {
-    visitas.items++;
-    productos = await getProductos();
-    res.send({
-        productos,
-        cantidad: productos.length})
-  })
+var bparser = bodyParser.urlencoded();
+
+let productos = [];
+
+app.get('/api/productos/listar', async (req, res) => {
+  if (productos.length) {
+    res.send(productos)
+  } else {
+    res.send({error: 'No hay prodoctos cargados'})
+  }
+});
   
+app.get('/api/productos/listar/:id', async (req, res) => {
+  if ( req.params.id >= 0 && req.params.id <= productos.length) {
+    res.send(productos[req.params.id]);
+  } else {
+    res.send({error : 'producto no encontrado'});
+  }
+});
   
-app.get('/item-random', async (req, res) => {
-    visitas.item++;
-    productos = await getProductos();
-    let random = Math.floor(Math.random() * (productos.length));
-    res.send({
-      producto: productos[random]
-    });
-  });
-  
+app.post('/api/productos/guardar/', async (req, res) => {
+  productos.push(req.body);
+  console.log(req.body);
+  res.send(productos);
+});
   
 app.get('/visitas', (req, res) => {
     res.send(visitas);

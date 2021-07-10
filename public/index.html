@@ -8,12 +8,22 @@
 </head>
 <body>
     
-    <form method="POST" action="api/productos/guardar">
-        <input type="text" placeholder="Producto">
-        <input type="number" placeholder="Precio">
-        <input type="text" placeholder="Thumbnail">
 
-        <button type="submit">Enviar</button>
+    <form action="/api/productos/guardar" method="post" style="margin-top: 10px; margin: 50% auto">
+        <div class="controls controls-row">
+            <input id="prod" name="title" type="text" class="span3" placeholder="Producto"> 
+        </div>
+        <div class="controls controls-row">
+            <input id="price" name="price" type="number" class="span3" placeholder="Precio">
+        </div>
+        <div class="controls controls-row">
+            <input id="thumb" name="thumbnail" type="text" class="span3" placeholder="thumbnail">
+        </div>
+        <div class="controls">
+            <button type="submit" class="btn btn-primary input-medium pull-right">Enviar</button>
+        </div>
     </form>
+
+
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+</head>
+<body>
+    
+
+    <form action="/api/productos/guardar" method="post" style="margin-top: 10px; margin: 50% auto">
+        <div class="controls controls-row">
+            <input id="prod" name="title" type="text" class="span3" placeholder="Producto"> 
+        </div>
+        <div class="controls controls-row">
+            <input id="price" name="price" type="number" class="span3" placeholder="Precio">
+        </div>
+        <div class="controls controls-row">
+            <input id="thumb" name="thumbnail" type="text" class="span3" placeholder="thumbnail">
+        </div>
+        <div class="controls">
+            <button type="submit" class="btn btn-primary input-medium pull-right">Enviar</button>
+        </div>
+    </form>
+
+
+</body>
+</html>

@@ -1,13 +1,13 @@
 const express = require('express');
-const hbs = require('hbs');
+const ejs = require('ejs');
 const app = express();
 const router = express.Router();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-app.set('view engine','hbs');
-hbs.registerPartials(__dirname + '/views');
+app.set('views', './views/pages');
+app.set('view engine','ejs');
 const PORT = 8080;
 
 /* type producto = {
@@ -28,7 +28,7 @@ router.get('/productos/listar', async (req, res) => {
 });
 
 router.get('/productos/vista', (req, res) => {
-  res.render('productos', { productos });
+  res.render('index', { productos });
 })
   
 router.get('/productos/listar/:id', async (req, res) => {
@@ -69,7 +69,7 @@ router.delete('/productos/borrar/:id', async (req, res) => {
 });
   
 router.get('/productos/guardar/', async (req,res) => {
-  res.render('form');
+  res.render('index', { productos });
 });
 
 router.post('/productos/guardar/', async (req, res) => {

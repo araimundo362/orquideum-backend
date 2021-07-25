@@ -6,8 +6,9 @@ const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-app.set('view engine','hbs');
-hbs.registerPartials(__dirname + '/views');
+app.set('view engine','pug');
+app.set('views', './views/pages');
+
 const PORT = 8080;
 
 /* type producto = {
@@ -28,7 +29,7 @@ router.get('/productos/listar', async (req, res) => {
 });
 
 router.get('/productos/vista', (req, res) => {
-  res.render('productos', { productos });
+  res.render('index', { object: productos });
 })
   
 router.get('/productos/listar/:id', async (req, res) => {
@@ -67,10 +68,6 @@ router.delete('/productos/borrar/:id', async (req, res) => {
     res.send({error : 'producto no encontrado'});
   }
 });
-  
-router.get('/productos/guardar/', async (req,res) => {
-  res.render('form');
-});
 
 router.post('/productos/guardar/', async (req, res) => {
   let newProduct = {
@@ -80,7 +77,7 @@ router.post('/productos/guardar/', async (req, res) => {
     id: productos.length + 1
   }
   productos.push(newProduct);
-  res.redirect('/api/productos/guardar');
+  res.redirect('/api/productos/vista');
 });
 
 app.use('/api', router);
